@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TwitterSearch</title>
+  <%= stylesheet_link_tag    "application" , "https://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.css", "geolocation-search", "tweets", :media => "all" %>
+  <%= javascript_include_tag "application", "https://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.js" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>

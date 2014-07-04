@@ -1,0 +1,54 @@
+<div class="main">
+	<ul class="tweets">
+		<h1><%= @key %></h1>
+			<% for count in 1..@tweets.count %>
+				<% tweet = @tweets[count] %>
+					<% unless tweet.blank? %>
+						<% if tweet.created_at >= @time %>
+							<li>
+								<div class="imgb">
+									<%= image_tag(tweet.user.profile_image_url) %>
+										<span class="user_name">
+											<%= tweet.user.name %>
+										</span>
+								</div>
+								<div class="descrption">
+									<p>
+										<%= tweet.text %>
+									</p>
+									<span class="tweet_time">
+										<%= tweet.created_at.strftime("%Y-%m-%d %I:%M:%S") %>
+									</span>
+								</div>
+							</li>
+						<% end %>
+					<% end %>	
+			<% end %>
+	</ul>
+	<ul class="tweets">
+		<h1><%= @tag %></h1>
+			<% for count in 1..@hashtags.count %>
+				<% hashtag = @hashtags[count] %>
+					<% unless hashtag.blank? %>
+						<% if eval(hashtag.created_time) >= @time_instagram %>
+							<li>
+								<div class="imgb">
+									<%= image_tag(hashtag.caption.from.profile_picture) %>
+										<span class="user_name">
+											<%= hashtag.user.full_name %>
+										</span>
+								</div>
+								<div class="descrption">
+									<p>
+										<%= hashtag.caption.text %>
+									</p>
+									<span class="tweet_time">
+										<%= Time.at(eval(hashtag.created_time)).strftime("%Y-%m-%d %I:%M:%S") %>
+									</span>
+								</div>
+							</li>
+						<% end %>
+					<% end %>	
+			<% end %>
+	</ul>
+</div>

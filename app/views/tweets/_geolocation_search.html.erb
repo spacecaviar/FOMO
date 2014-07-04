@@ -1,0 +1,359 @@
+<!-- -------------------------------------- Page 1 ---------------------------------- -->
+<!--<div class="page-number">.1</div> -->
+
+<div class = "result">
+	<span>Generated on:</span>
+	<span><%= Time.now.in_time_zone('Paris').strftime("%b %d %Y, %H:%M:%S") %> CET</span>
+	<span>
+		<% unless city.blank? %>
+			<%= city %>, <%= country %>
+		<% else %>
+		  IP: <%= ip_address %>
+		<% end %>
+	</span>
+</div>
+
+<div class = "result-right">
+<span>F0M0.070514-N <%= count_no %></span>
+</div>	
+
+<span class ="key">
+  <% unless key.blank? %>
+	#<%= key %>
+  <% end %>
+</span>
+<% if geolocation == "on" %>
+<div class="dynamic-img cover">	
+	<%#= image_tag("#{Rails.root}/app/assets/images/image1.jpg") %>
+	<%= image_tag("http://api.tiles.mapbox.com/v3/vinaymehta.ibc7pbpm/#{longitude},#{latitude},17/770X800.jpg")  %>
+	<div class="circle">
+    <% profile_images = [] %>
+	<% profile_images =  tweets.collect(&:user).collect(&:profile_image_url) %>
+	<% profile_images << hashtags.collect(&:user).collect(&:profile_picture) %> 
+		<% profile_images.flatten.each do |profile_image| %>
+			<% style_top = rand(0..390) %>
+			<% style_left = rand(0..420) %>
+			<% if style_top > 300 &&  style_left < 50 %>
+              <% style_left = rand(100..315) %>
+            <% elsif style_top > 300 &&  style_left > 300 %>
+              <% style_left = rand(100..315) %>
+            <% elsif style_top < 50 &&  style_left > 300 %>
+              <% style_top = rand(100..315) %>
+            <% elsif style_top < 50 &&  style_left < 50 %>
+              <% style_top = rand(100..315) %>
+			<% end %>
+	
+		<div class="small-img">
+			<%= image_tag(profile_image, :style => "left:#{style_left}px; top: #{style_top} px;") %>
+		</div>
+		<div style='<%=  "left:#{style_left + 15}px; top: #{style_top + 44.5} px;" %>color:black;position:absolute;'>
+          l
+		</div>
+			
+		<% end %>
+	
+	</div>
+	<% distance_change = distance.to_i %>
+	<div class="text-area">
+		<% unless city.blank? %>
+			<p>	<%= city %>, <%= country %></p>
+		<% end %>
+		<% unless latitude.blank? && longitude.blank? %>
+			<p><%= latitude.to_f.round(2) %>, <%= longitude.to_f.round(2) %></p>
+		<% end %>
+	</div>
+
+</div>
+<% end %>
+<div class="vertical-text"><%= city %>, <%= country %> <%= latitude.to_f.round(2) %>, <%= longitude.to_f.round(2) %></div>
+<div class="vertical-text-second">
+  <% unless key.blank? %>
+	#<%= key %>
+  <% end %>
+</div>
+<% if geolocation == "on" %>
+	<div class="main-logo">
+<% else %>
+	<div class="main-logo-distance">
+<% end %>
+	<div class="logo first">
+		<%= image_tag("#{Rails.root}/app/assets/images/fomo-logo.jpg") %>
+	</div>
+	<div class="logo">
+		<%= image_tag("#{Rails.root}/app/assets/images/fomo-logo.jpg") %>
+	</div>
+	<div class="logo last">
+		<%= image_tag("#{Rails.root}/app/assets/images/fomo-logo.jpg") %>
+	</div>
+</div>
+
+<div class="clear"></div>
+<!-- -------------------------------------- End Page 1 ---------------------------------- -->	
+
+<!-- -------------------------------------- Page 2 ---------------------------------- -->	
+<!-- <div class="page-number">.2</div> -->
+<div class ="blank"></div>
+<div class="page-break"></div>
+
+<!-- -------------------------------------- End Page 2 ---------------------------------- -->	
+
+<!-- -------------------------------------- Page 4 ---------------------------------- -->
+
+
+<div class ="latest-post">
+  <% count = 0 %>
+  <% instagram_count = 0 %>
+  <% page_count = 1 %>
+  <% twitter_users = [] %>
+  <% instagram_users = [] %>
+  <% tweets.each_with_index do |tweet, index| %>
+    <% if count%24 == 0  %>
+      <div class="page-number-second">. <%= page_count %></div>
+      <% page_count = page_count + 1 %>
+    <% end %>
+
+    <p>
+       <% count = count + 1 %>
+       <%= tweet.text.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace).gsub("�", '') %>
+       <% twitter_users << [tweet.user.name, tweet.user.screen_name, (page_count - 1) ] %>
+    </p>
+
+    <% time_difference = 0 %>
+    <% if index < (tweets.size - 1 ) %>
+      <% time_difference = tweet.created_at - tweets[index + 1].created_at %>
+    <% end %>
+
+    <% number_of_spaces = time_difference.to_i/10 %>
+
+    <% for i in 1..number_of_spaces %>
+      <p></p>
+      <% count = count + 1 %>
+
+      <% if count%24 == 0 && instagram_count < (hashtags.size - 1)%>
+        &nbsp;
+        <div class="page-break"></div>
+        </div>
+        <% unless hashtags[instagram_count].images.blank? %>
+          <div class="page-number-third">. <%= page_count %></div>
+          <% page_count = page_count + 1 %>
+          <div class="blank-img"><%= image_tag("#{Rails.root}/app/assets/images/blank-img.png") %></div>
+          <div class="dynamic-img"><%= image_tag(hashtags[instagram_count].images.standard_resolution.url) if hashtags[instagram_count].type == "image" &&  hashtags[instagram_count].images.standard_resolution.url? %></div>
+          <% instagram_count = instagram_count + 1 %>
+          <% instagram_users << [hashtags[instagram_count].user.full_name.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace).gsub("�", ''), hashtags[instagram_count].user.username, (page_count - 1) ]%>
+        <% end %>
+        <% unless hashtags[instagram_count].caption.blank? %>
+          <div class="latest-p">
+  	        <p><%= hashtags[instagram_count].caption.text.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace).gsub("�", '') if hashtags[instagram_count].caption %> via @<%= hashtags[instagram_count].user.username %></p>
+  	     
+	     </div>
+
+          &nbsp;
+          <div class="page-break"></div>
+          <div class ="latest-post">
+        <% end %>
+      <% else %>
+        <% if count%24 == 0 %>
+          &nbsp;
+          <div class="page-break"></div>
+          <div class="page-number-second">. <%= page_count %></div>
+          <% page_count = page_count + 1 %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if count%24 == 0 && instagram_count < (hashtags.size - 1)%>
+        &nbsp;
+        <div class="page-break"></div>
+        </div>
+        <% unless hashtags[instagram_count].images.blank? %>
+          <div class="page-number-third">. <%= page_count %></div>
+          <% page_count = page_count + 1 %>
+          <div class="blank-img"><%= image_tag("#{Rails.root}/app/assets/images/blank-img.png") %></div>
+          <div class="dynamic-img"><%= image_tag(hashtags[instagram_count].images.standard_resolution.url) if hashtags[instagram_count].type == "image" &&  hashtags[instagram_count].images.standard_resolution.url? %></div>
+          <% instagram_count = instagram_count + 1 %>
+          <% instagram_users << [hashtags[instagram_count].user.full_name.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace).gsub("�", ''), hashtags[instagram_count].user.username, (page_count - 1) ]%>
+        <% end %>
+        <% unless hashtags[instagram_count].caption.blank? %>
+          <div class="latest-p">
+  	        <p><%= hashtags[instagram_count].caption.text.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace).gsub("�", '') if hashtags[instagram_count].caption %> via @<%= hashtags[instagram_count].user.username %></p>
+  	     
+	     </div>
+
+          &nbsp;
+          <div class="page-break"></div>
+          <div class ="latest-post">
+        <% end %>
+      <% end %>
+
+  <% end %>
+  
+ <div class="clear"></div>
+</div>
+
+<!-- -------------------------------------- End Page 3 ---------------------------------- -->
+
+
+
+<% if  instagram_count < hashtags.size %>
+    &nbsp;
+    <div class="page-break"></div>
+  <% for i in (instagram_count + 1)..(hashtags.size - 1) %>
+    <% unless hashtags[i].images.blank? %>
+      <div class="page-number-third">. <%= page_count %></div>
+      <% page_count = page_count + 1 %>
+      <div class="blank-img"><%= image_tag("#{Rails.root}/app/assets/images/blank-img.png") %></div>
+      <div class="dynamic-img">
+	    <%= image_tag(hashtags[i].images.standard_resolution.url) if hashtags[i].type == "image" &&  hashtags[instagram_count].images.standard_resolution.url %>
+	    <% instagram_users << [hashtags[i].user.full_name.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace).gsub("�", ''), hashtags[i].user.username, (page_count - 1) ]%>
+	   </div>
+	<% end %>
+	<% unless hashtags[i].caption.blank? %>
+      <div class="latest-p">
+  	    <p><%= hashtags[i].caption.text.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace).gsub("�", '') if hashtags[i].caption %> via @<%= hashtags[i].user.username %></p>
+  	     <% instagram_count = instagram_count + 1 %>
+	   </div>
+	<% end %>
+
+          &nbsp;
+          <div class="page-break"></div>
+  <% end %>
+<% end %>
+
+
+<!-- -------------------------------------- Page 3 ---------------------------------- -->	
+
+
+<div class = "content">
+	<div class = "right-content">
+		<div class = "heading">
+			<span>Contributors </span>
+			<span>Authors:</span>
+		</div>
+		<div class = "names">
+						<ul>
+						<% twitter_users.each do |user| %>
+							<li><div class="tweet-user-name"><%= user[0] %> (@<%= user[1] %>)</div>  &nbsp; &nbsp; P.<%= user[2] %></li>
+						<% end %>
+					</ul>
+		</div>
+
+		<div class = "heading" stye="margin-top:30px; display:block;"><br />
+			<span>Photographers:</span>
+		</div>
+		<div class = "names">
+		<% unless hashtags.blank? %>
+			
+				
+			<ul>
+				<% instagram_users.each do |user| %>
+					<li><div class="tweet-user-name"><%= user[0]%> (@<%= user[1] %>)</div>  &nbsp; &nbsp; P.<%= user[2] %></li>
+				<% end %>
+			</ul>
+		<% end %>
+		</div>
+	</div>
+</div>
+
+&nbsp;
+<div class="page-break"></div>
+
+
+
+<!-- -------------------------------------- Page 10 ---------------------------------- -->
+
+<div class="team-content">		
+<div class="page-number-second">. <%= page_count %></div>
+<% page_count = page_count + 1 %>
+<div class = "team-left">
+	<p>
+	This edition of FOMO is published and printed in the Swiss Pavilion at the 14th International Architecture Exhibition, La Biennale di Venezia, curated by Hans Ulrich Obrist. “Lucius Burckhardt and Cedric Price - A stroll through a fun palace”, is a multi-faceted project presenting the archives of Lucius Burckhardt (1925- 2003) and Cedric Price (1934- 2003) as a changing mise-en-sc&#232;ne to reflect on the future architecture in the 21st century. Acknowledging that it is not possible to present the complex practices of Burckhardt and Price through a static display of drawings Obrist’s project for the Swiss Pavilion aims for visitors to encounter the architects’ archives performatively. The opening days will feature a marathon event on architecture, landscape design and modes of display.
+</p>
+<p>
+Special thanks to<br />
+Hans Ulrich Obrist<br />
+Herzog & de Meuron<br />
+Atelier Bow-Wow<br />
+Lorenza Baroncelli<br />
+Stefano Boeri<br />
+Eleanor Bron<br />
+Elizabeth Diller<br />
+Olafur Eliasson<br />
+Liam Gillick<br />
+Dominique Gonzalez-Foerster<br />
+Dan Graham<br />
+Dorothea von Hantelmann<br />
+Samantha Hardingham<br />
+Carsten H&#246;ller<br />
+Koo Jeong-a<br />
+Philippe Parreno<br />
+Asad Raza<br />
+Tino Sehgal<br />
+Rirkrit Tiravanija<br />
+Mirko Zardini<br />
+</p>
+<p>
+	Commissioned by<br /> 
+	Swiss Arts Council Pro Helvetia <br /> 
+</p>
+<p>
+Supported by<br /> 
+LUMA Foundation<br /> 
+STEO Foundation<br /> 
+embru<br /> 
+Vitra.<br /> 
+Agn&#232;s b.<br /> 
+CCA<br /> 
+Lucius & Annemarie Burckhardt<br />
+Foundation<br /> 
+UNESCO<br /> 
+gta<br /> 
+uni Basel<br /> 
+	</p>
+</div>
+<div class = "team-right">
+	<p>
+		This publication was automatically generated on <%= Time.now.in_time_zone('Paris').strftime("%d %b %Y") %> at <%= Time.now.in_time_zone('Paris').strftime("%H:%M") %> CET by the FOMO algorithm using geolocated and tagged content collected from Twitter, Instagram and the web.
+	</p>
+	<p>
+		FOMO is an open source project by Space Caviar (@spacecaviar, spacecaviar.net). Source code is available at: http://github.com/spacecaviar
+	</p>
+	<span>Team:</span>
+	<ul class="team-members">
+		<li>Joseph Grima</li>
+		<li>Tamar Shafrir</li>
+		<li>Simone C. Niquille</li>
+		<li>Tom Keeley</li>
+		<li>Vinay Mehta</li>
+		<li>Bernardo Martins de Almeida</li>
+	</ul>	
+
+
+		<p>F0M0bile fabricated<br />
+		by Marcello Comoglio<br />
+		& Alessandro Mason</p>
+
+	<p>Algorithm: F0M0 2.0<br /> 
+	Template: Venice 2014<br /> 
+	Paper: Munken Lynx 100g/m<br /> 
+	Printing/Binding: HP CM6040 + CC516A
+	</p>
+</div>
+</div>
+<div class="main-logo-bottom">
+	<div class="logo-bottom first">
+		<%= image_tag("#{Rails.root}/app/assets/images/fomo-logo.jpg") %>
+	</div>
+	<div class="logo-bottom">
+		<%= image_tag("#{Rails.root}/app/assets/images/fomo-logo.jpg") %>
+	</div>
+	<div class="logo-bottom last">
+		<%= image_tag("#{Rails.root}/app/assets/images/fomo-logo.jpg") %>
+	</div>
+</div>
+	<div class="vertical-text-four"><%= city %>, <%= country %>  <%= latitude.to_f.round(2) %>, <%= longitude.to_f.round(2) %></div>
+	<div class="vertical-text-five">
+  <% unless key.blank? %>
+	#<%= key %>
+  <% end %>
+</div>
+

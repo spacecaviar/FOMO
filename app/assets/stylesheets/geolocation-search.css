@@ -1,0 +1,227 @@
+
+.page-bg{
+	background:#000;
+	width:100%;
+	float:left;
+	padding:0 0 20px 0;
+}
+.box{
+	width:1000px;
+	margin:0 auto;
+}
+.header{
+	width:100%;
+	float:left;
+	margin-bottom:30px;
+	border-bottom:solid 3px #fff;
+	padding:15px 0 15px 0;	
+}
+.heading{	
+	font-family:arial;
+	font-size:15px;
+	margin-bottom:5px;
+	color:#fff;	
+}
+.generator-interval, .layout-template{
+	width:350px;
+	float:left;
+}
+.generator-interval span, .layout-template span{	
+	font-family:arial;
+	display:block;
+	font-size:15px;
+	margin-bottom:5px;
+	color:#fff;
+}
+.generator-interval select, .layout-template select{
+	width:120px;
+	float:left;
+	padding:5px;
+	background:#fff;	
+}
+.generate{
+	width:206px;
+	float:left;
+	padding:5px;
+	margin-top:-20px;
+	border:solid 3px #fff;	
+}
+.generate-in{
+	width:190px;
+	float:left;
+	border:solid 3px #fff;
+	padding:5px;	
+}
+.generate-in span{
+	font-family:arial;
+	font-size:15px;
+	color:#fff;
+	display:block;
+	margin-bottom:10px;
+	text-align:center;
+}
+.generate-in .start, .generate-in .stop{
+	background:#00FF00;
+	width:92px;
+	font-size:15px;
+	color:#000;
+	padding:5px 0;
+	float:left;
+	border:none;
+	cursor:pointer;	
+}
+.start_status
+{
+    background-color:#CCCCCC;
+    width:92px;
+	font-size:15px;
+	color:#000;
+	padding:5px 0;
+	float:left;
+	border:none;
+	cursor:pointer;	
+}
+.stop_status
+{
+    background-color:#CCCCCC;
+    width:92px;
+	font-size:15px;
+	color:#000;
+	padding:5px 0;
+	float:left;
+	border:none;
+	cursor:pointer;	
+	margin-left:6px;
+}
+.generate-in .stop{
+	background:red;
+	margin-left:6px;
+}
+.leftcol{
+	width:480px;
+	float:left;
+}
+.row{
+	width:100%;
+	float:left;
+}
+.row .leftside{
+	width:520px;
+	float:left;	
+}
+.row span{
+	font-family:arial;
+	display:block;
+	font-size:15px;
+	margin-bottom:5px;
+	color:#fff;	
+}
+.row small{
+	color:#fff;
+	font-size:14px;
+	margin:0 0 0 5px;
+}
+.row .twitter{
+	background:#fff;
+	padding:5px 20px;
+	border:none;
+}
+.row .instagram{
+	background:none;
+	border:solid 1px #fff;
+	padding:5px 20px;
+	color:#fff;
+}
+.leftcol .filter-hd{
+	font-family:arial;
+	display:block;
+	font-size:15px;
+	margin-bottom:5px;
+	color:#fff;
+	margin:25px 0 20px 0;		
+}
+.multiplte-data{
+	width:100%;
+	float:left;
+}
+.multiple-data span{
+	font-family:arial;
+	display:block;
+	font-size:15px;
+	margin-bottom:3px;
+	color:#fff;	
+}
+.multiple-data input[type="text"]{
+	width:460px;
+	float:left;
+	background:#fff;
+	color:#000;
+	border:none;
+	padding:5px;	
+}
+.rightcol{
+	width:480px;
+	float:left;
+	margin:62px 0 0 40px;
+}
+.rightcol .geolocation-data{
+	width:100%;
+	float:left;
+}
+.rightcol .geolocation-data span{
+	font-family:arial;
+	display:block;
+	font-size:15px;
+	margin-bottom:3px;
+	color:#fff;	
+}
+.rightcol .geolocation-data input[type="text"]{
+	width:220px;
+	float:left;
+	background:#fff;
+	color:#000;
+	border:none;
+	padding:5px;
+	margin-right:10px; 	
+}
+.search-radius{
+	width:40%;
+	float:left;
+	margin:10px 0 0 0;
+}
+.search-radius select{
+	padding:5px;
+}
+.search-radius span{
+	font-family:arial;
+	display:block;
+	font-size:15px;
+	margin-bottom:3px;
+	color:#fff;	
+}
+.radio-label-on,.radio-label-off{
+	color:white;
+	float: left;
+	font-size: 13px;
+	font-family: arial;
+	margin-right:5px;
+}
+.radio-label-on input[type="radio"]{
+	float: left;
+	margin-top:2px;
+}
+.radio-label-off input[type="radio"]{
+	float: left;
+	margin-top:2px;
+}
+.geolocation_search{
+	float:left;
+	margin:10px 0 0 0;
+}
+.geolocation_search span{
+	color:#fff;
+	font-family: arial;
+	font-size: 15px;
+	display: block;
+	margin-bottom: 5px;
+}

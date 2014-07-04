@@ -1,0 +1,139 @@
+<div class="page-bg">
+	<div class="box">
+		<%= form_for(:search_data , :html => { :class => 'search_data' }, :url => {:action => "geolocation_search"})  do |f| %>
+			<div class="header">
+				<div class="heading">Choose your channels and search filters.</div>
+					<div class="generator-interval">
+						<span>Genrator interval:</span>
+						<%= f.collection_select(:time_interval, Timeinterval.all, :time_interval_mins,:time_interval_mins) %>
+					</div>
+					<div class="layout-template">
+						<span>Layout Template:</span>
+						<%= f.collection_select(:layout, Layout.all, :id,:layouts) %>
+					</div>
+					<div class="generate">
+						<div class="generate-in">
+							<span>Generate!</span>
+						<%= f.submit "Start", :class => 'start', :id => 'start' %>
+                    
+                    <%= f.submit "Stop", :class => 'stop', :name => "commit",:id => 'stop' %>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<span>Choose Channels:</span>
+					<div class="leftside">			
+						<%#= f.submit "Twitter" ,:class => 'twitter' %><%= link_to "Twitter", set_status_path(:val => "twitter"), :class => 'twitter', :remote => true %><small id="twitter_status">/<%= session[:twitter] %></small>
+					</div>
+					<%#= f.submit "Instagram" ,:class => 'instagram' %><%= link_to "Instagram", set_status_path(:val => "instagram"), :class => 'instagram', :remote => true %><small id = 'instagram_status'>/<%= session[:instagram] %></small>
+				</div>
+				<div class="leftcol">
+					<span class="filter-hd">Filter via:</span>
+					<div class="multiple-data">
+						<span>#Hashtag /divide multiples with comes</span>
+						<%= text_field_tag :tweet %>
+					</div>
+				</div>
+				<div class="rightcol">
+					<div class="geolocation-data">
+						<span>Geolocation /Enter Lat.Long or drag & click the pin</span>
+						<%= text_field_tag :latitude, @lat_lon[0] %>
+						<%= text_field_tag :longitude, @lat_lon[1] %>
+					</div>
+			
+					<div class="search-radius">
+						<span>Search Radius</span>
+							<%= f.collection_select(:radius, Radius.all, :id,:radius) %>
+					</div>
+					<div class = "geolocation_search">
+						<span>Geolocation Search</span>
+						<div class = "radio-label-on">
+							<%= radio_button_tag 'geolocation', 'on' , :selected %> ON
+						</div>
+						<div class = "radio-label-off">
+							<%= radio_button_tag 'geolocation', 'off' %> OFF
+						</div>
+					</div>
+				</div>
+				<div class="home_map">
+					<div id="map">
+					</div>
+				</div>
+			</div>
+		<% end %>	
+	</div>
+</div>
+
+
+<script>
+	$(document).ready(function(){  
+		var map = L.mapbox.map('map', 'vinaymehta.ibc7pbpm');
+		map.setView(<%= @lat_lon %>, 14);
+		var image_url =  '/assets/marker-icon.jpg';
+    var sensor_icon = L.icon({
+      iconUrl: image_url,
+      iconSize: [35, 51],
+      iconAnchor: [10, 38],
+      popupAnchor: [0, -25]
+    });
+	  var marker = L.marker(
+	  	["<%= @lat_lon[0] %>", "<%= @lat_lon[1] %>"],
+	  	{
+	  		icon: sensor_icon,
+	  		draggable: true
+	  	}
+	  ).addTo(map);
+	  var circle = L.circle(<%= @lat_lon %>, 1000, {draggable: true}).addTo(map);
+	  marker.on('dragend', function(event){
+	    var marker = event.target;
+	    var position = marker.getLatLng();
+	 
+	    marker.setLatLng(new L.LatLng(position.lat, position.lng),{draggable:'true'});
+	    circle.setLatLng(new L.LatLng(position.lat, position.lng),{draggable:'true'});
+	    map.panTo(new L.LatLng(position.lat, position.lng))
+			$(latitude).val(position.lat)
+			$(longitude).val(position.lng)
+		
+	  });
+	  $("#search_data_radius").change(function(){
+	  	radius = ($(this).val())*1000;
+	  	circle.setRadius(radius)
+	  });
+
+  });
+</script>
+
+<script>
+<% unless session[:time_interval].blank? %>
+//var counter = <%= session[:time_interval].to_i*60000+30000 %>;
+var counter = <%= session[:time_interval].to_i*60000+30000 %>;
+$( document ).ready(function() {
+	window.setInterval( function() {
+		sendgetreq();
+	}, counter);
+});
+<% end %>
+function sendgetreq()
+{
+	<% unless session[:start] == "off" %>
+		window.location = 'pdf_generate.html';
+	<% end %>
+}
+
+</script>
+<script>
+$(document).ready(function(){
+	<% if session[:start] == "on" %>
+      document.getElementById('start').disabled = 'true';
+        $("#start").removeClass( "start" ).addClass( "start_status" );
+     <% elsif session[:start] == nil %>
+   		 $("#start").removeClass( "start_status" ).addClass( "start" );
+   		 $("#stop").removeClass( "stop_status" ).addClass( "stop" );
+     <% else session[:start] == "off" %>
+        document.getElementById('stop').disabled = 'true';
+        $("#stop").removeClass( "stop" ).addClass( "stop_status" );
+    <% end %>	
+});
+    
+   
+</script>

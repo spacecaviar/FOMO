@@ -1,0 +1,141 @@
+// Place all the styles related to the tweets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body{
+	margin:0px;
+	padding:0px;
+}
+.main{
+	width:100%;
+	float:left;
+	margin:40px 0 0 0;
+}
+ul.tweets{
+	width:40%;
+	float:left;
+	margin:0px 20px;
+	padding: 0 0px;
+	list-style:none;
+	border:solid 1px #ccc;
+	border-bottom:none;
+
+}
+ul.tweets li{
+	width:100%;
+	float:left;
+	padding:10px 0px 10px 0px;
+	border-bottom:solid 1px #ccc;
+}
+
+.imgb{
+	width:95px;
+	float:left;
+	margin-left: 5px;	
+}
+
+
+.imgb .user_name{
+	margin-top: 5px;
+	font-family:arial;
+	display:block;
+	font-size:10px;
+	word-wrap: break-word;
+}
+.imgb img{
+	width:48px;
+	height:48px;
+}
+.descrption{
+	width:45%;
+	float:left;
+	margin:0 0 0 20px;
+}
+.descrption p{
+	font-size: 10px;
+	font-family:arial;
+	line-height:20px;
+	margin:0 0 10px 0;
+	word-wrap: break-word;
+}
+.tweet_time{
+	font-size: 10px;
+	font-family:arial;
+	display:block;
+}
+.search-block{
+	background:#f1f1f1;
+	width:420px;
+	margin:0 auto;
+	padding:20px;
+}
+.search-block label{
+	font-size:16px;
+	font-family:arial;
+	margin:0 10px 0 0;
+}
+.search-block input[type="text"]{
+	width:190px;
+	border:solid 1px #ccc;
+	padding:5px;
+	font-size:14px;	
+}	
+.block-in{
+	width:324px;
+	margin:0 0 0 45px;
+	padding:0 0 50px 0;	
+}
+.block-in input[type="submit"]{
+	background: #55acee;
+	color: #fff;
+	border: solid 1px #3b88c3;
+	border-radius: 3px;
+	padding: 6px 10px;
+	font-size: 14px;
+	font-weight: bold;
+	float:right;
+	margin:6px 0 0 0;	
+}
+h1{
+	font-family:arial;
+	text-align:center;
+}
+h2{
+	text-align:center;
+	font-size: 12px;
+}
+.search-btn{
+	font-family:arial;
+	background: #55acee;
+	border: solid 1px #3b88c3;
+	border-radius: 3px;
+	padding: 8px 10px;
+	font-size: 15px;
+	font-weight: bold;
+	float: right;
+	margin: 6px 0 0 0;
+}
+.search-btn a{
+	color: #fff;
+	text-decoration:none;
+}
+
+.imgpost img{
+	width:96px;
+	float:left;
+	margin-left: 5px;	
+}
+.home_map{
+	position:relative;
+	width: 100%;
+	float: left;
+	height: 400px;
+	margin-top: 20px;
+}
+#map{
+	position:absolute;
+	width: 98%;
+	height: 95%;
+}
+
+	

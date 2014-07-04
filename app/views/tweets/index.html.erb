@@ -1,0 +1,16 @@
+
+	<span class="search-btn">
+	<%= link_to "Geolocation Search", {:controller => 'tweets' , :action => 'show'} %>
+	</span>
+<div class="search-block"> 
+	<h1> Twitter/Instagram Search </h1>
+		<%= form_tag download_tweets_path  do %>
+			<div class="block-in">
+			<%= label_tag :tweet, "Enter Keyword" %>
+			<%= text_field_tag :tweet %>
+			<%= submit_tag "Generate PDF" %>
+		</div>
+		<% end %>	
+
+</div>
+
